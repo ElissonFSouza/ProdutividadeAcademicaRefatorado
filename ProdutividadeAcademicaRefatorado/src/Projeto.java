@@ -95,7 +95,7 @@ public class Projeto {
         status.concluirProjeto();
     }
 
-    public String toString() {
+    public StringBuilder imprimirParticipantes() {
         StringBuilder participantes = new StringBuilder();
         if (getListaParticipantes().isEmpty()) {
             participantes = new StringBuilder(" Não há colaboradores alocados ao projeto.");
@@ -104,7 +104,10 @@ public class Projeto {
                 participantes.append("\n  ").append(colab.getNome()).append(" (").append(colab.getOcupacao()).append(")");
             }
         }
+        return participantes;
+    }
 
+    public StringBuilder imprimirPublicacoes() {
         StringBuilder publicacoes = new StringBuilder();
         if (getListaPublicacoesAssociadas().isEmpty()) {
             publicacoes = new StringBuilder(" Não há publicações associadas ao projeto.");
@@ -113,12 +116,15 @@ public class Projeto {
                 publicacoes.append("\n  ").append(pub.getTitulo()).append(" (").append(pub.getAnoPublic()).append(")");
             }
         }
+        return publicacoes;
+    }
 
+    public StringBuilder imprimirOrientacoes() {
         StringBuilder orientacoes = new StringBuilder();
         if (getListaOrientacoesAssociadas().isEmpty()) {
             orientacoes = new StringBuilder(" Não há orientações associadas ao projeto.");
         } else {
-                for(Orientacao ori : listaOrientacoesAssociadas) {
+            for(Orientacao ori : listaOrientacoesAssociadas) {
                 if (ori.getTituloProj() != null) {
                     orientacoes.append("\n  ").append(ori.getNomeProf()).append("/").append(ori.getNomeColab()).append(" (").append(ori.getTituloProj()).append(")");
                 } else {
@@ -127,12 +133,19 @@ public class Projeto {
 
             }
         }
+        return orientacoes;
+    }
 
+    public String imprimir() {
         return "- Título do projeto: " + titulo + "\n- Data de início: " + sdf.format(dataInicio)
                 + "\n- Data de término: " + sdf.format(dataFim) + "\n- Agência financiadora: " + agenciaFinanciadora + "\n- Valor financiado: "
                 + String.format("R$ %.2f", valorFinanciado) + "\n- Objetivo: " + objetivo + "\n- Descrição: " + descricao
-                + "\n- Participantes:" + participantes + "\n- Publicações:" + publicacoes + "\n- Orientações:" + orientacoes
+                + "\n- Participantes:" + imprimirParticipantes() + "\n- Publicações:" + imprimirPublicacoes() + "\n- Orientações:" + imprimirOrientacoes()
                 + "\n- Status: " + status;
+    }
+
+    public String toString() {
+        return imprimir();
     }
 }
 

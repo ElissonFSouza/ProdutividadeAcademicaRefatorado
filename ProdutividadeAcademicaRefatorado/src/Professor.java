@@ -15,8 +15,7 @@ public class Professor extends Colaborador{
         listaMinhasOrientacoes.add(ori);
     }
 
-    @Override
-    public String toString() {
+    public StringBuilder imprimirOrientacoes() {
         StringBuilder orientacoes = new StringBuilder();
         if (getListaMinhasOrientacoes().isEmpty()) {
             orientacoes = new StringBuilder(" Este colaborador não possui orientações.");
@@ -30,6 +29,11 @@ public class Professor extends Colaborador{
 
             }
         }
-        return super.toString() + "\n- Orientações:" + orientacoes;
+        return orientacoes;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\n- Orientações:" + imprimirOrientacoes();
     }
 }

@@ -1,8 +1,15 @@
 /* Projeto de Software - Sistema de Produtividade Acadêmica (Refatorado)
    Nome do aluno desenvolvedor: Élisson Souza
-   Padrões utilizados no refatoramento: - State (Status.java, EmElaboracao.java, EmAndamento.java, Concluido.java);
-                                        - Extract Method (AppSistema.tentarNovamente(), Laboratorio.pesquisarProjeto(),
-                                          Laboratorio.pesquisarPublicacao(), Laboratorio.pesquisarColaborador())
+   Padrões utilizados no refatoramento: * State:
+                                          - Status.java, EmElaboracao.java, EmAndamento.java, Concluido.java;
+                                        * Extract Method:
+                                          - AppSistema.java: tentarNovamente();
+                                          - Laboratorio.java: pesquisarProjeto(), pesquisarPublicacao(), pesquisarColaborador().
+                                        * Move Accumulation to Collecting Parameter:
+                                          - Projeto.java: imprimirParticipantes(), imprimirPublicacoes(), imprimirOrientacoes(), imprimir(), toString();
+                                          - Publicacao.java: imprimirAutores(), imprimirProjetoAssociado(), imprimir(), toString();
+                                          - Colaborador.java: imprimirPublicaoes(), imprimirProjeto(), imprimir(), toString();
+                                          - Professor.java: imprimirOrientacoes(), toString().
  */
 
 import java.text.ParseException;
@@ -59,7 +66,11 @@ public class AppSistema {
                         System.out.print("Digite o título: ");
                         tituloProj = entradaString.nextLine();
                         if (!tituloProj.equals("")) {
-                            concluido = true;
+                            if (Laboratorio.pesquisarProjeto(tituloProj) == null) {     //Verifica se já existe um projeto com o título digitado
+                                concluido = true;
+                            } else {
+                                System.out.println("Já existe um projeto cadastrado com esse título.");
+                            }
                         } else {
                             System.out.println("O título do projeto precisa ser inserido.");
                         }
@@ -324,7 +335,11 @@ public class AppSistema {
                                     System.out.print("Digite o título da publicação: ");
                                     tituloPub = entradaString.nextLine();
                                     if (!tituloPub.equals("")) {
-                                        concluido = true;
+                                        if (Laboratorio.pesquisarPublicacao(tituloPub) == null) {     //Verifica se já existe uma publicação com o título digitado
+                                            concluido = true;
+                                        } else {
+                                            System.out.println("Já existe uma publicação cadastrada com esse título.");
+                                        }
                                     } else {
                                         System.out.println("O título da publicação precisa ser inserido.");
                                     }
@@ -583,7 +598,11 @@ public class AppSistema {
             System.out.print("Digite o nome: ");
             nomeColab = entradaString.nextLine();
             if (!nomeColab.equals("")) {
-                concluido = true;
+                if (Laboratorio.pesquisarColaborador(nomeColab) == null) {     //Verifica se já existe um colaborador com o nome digitado
+                    concluido = true;
+                } else {
+                    System.out.println("Já existe um colaborador cadastrado com esse nome.");
+                }
             } else {
                 System.out.println("O nome do colaborador precisa ser inserido.");
             }

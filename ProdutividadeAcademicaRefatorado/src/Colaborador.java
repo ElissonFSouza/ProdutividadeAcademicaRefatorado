@@ -40,7 +40,7 @@ public class Colaborador {
         return ocupacao;
     }
 
-    public String toString() {
+    public StringBuilder imprimirPublicacoes() {
         StringBuilder publicacoes = new StringBuilder();
         if (getListaMinhasPublicacoes().isEmpty()) {
             publicacoes = new StringBuilder(" Este colaborador não é autor de nenhuma publicação.");
@@ -49,7 +49,10 @@ public class Colaborador {
                 publicacoes.append("\n  ").append(pub.getTitulo()).append(" (").append(pub.getAnoPublic()).append(")");
             }
         }
+        return publicacoes;
+    }
 
+    public StringBuilder imprimirProjeto() {
         StringBuilder projetos = new StringBuilder();
         if (getListaMeusProjetos().isEmpty()) {
             projetos = new StringBuilder(" Este colaborador não participa de nenhum projeto.");
@@ -58,8 +61,15 @@ public class Colaborador {
                 projetos.append("\n  ").append(proj.getTitulo()).append(" (").append(proj.getStatus()).append(")");
             }
         }
+        return projetos;
+    }
 
+    public String imprimir(){
         return "- Nome: " + nome + "\n- Email: " + email + "\n- Ocupação: " + ocupacao
-                + "\n- Projetos em que participa:" + projetos + "\n- Publicações:" + publicacoes;
+                + "\n- Projetos em que participa:" + imprimirProjeto() + "\n- Publicações:" + imprimirPublicacoes();
+    }
+
+    public String toString() {
+        return imprimir();
     }
 }

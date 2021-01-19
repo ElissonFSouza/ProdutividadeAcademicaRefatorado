@@ -33,7 +33,12 @@ public class Publicacao implements Comparable<Publicacao> {
         this.projetoAssociado = projetoAssociado;
     }
 
-    public String toString() {
+    @Override
+    public int compareTo(Publicacao pub) {
+        return (pub.anoPublic - this.anoPublic);
+    }
+
+    public StringBuilder imprimirAutores() {
         StringBuilder autores = new StringBuilder();
         if (getListaAutores().isEmpty()) {
             autores = new StringBuilder(" Não há autores associados à publicação.");
@@ -42,21 +47,26 @@ public class Publicacao implements Comparable<Publicacao> {
                 autores.append("\n  ").append(colab.getNome()).append(" (").append(colab.getOcupacao()).append(")");
             }
         }
+        return autores;
+    }
 
+    public String imprimirProjetoAssociado() {
         String projeto;
         if (projetoAssociado == null) {
             projeto = "Não há projeto associado à publicação.";
         } else {
             projeto = projetoAssociado.getTitulo();
         }
-
-        return "- Título da publicação: " + titulo + "\n- Conferência onde foi publicada: "
-                + conferencia + "\n- Ano de publicação: " + anoPublic + "\n- Autores:" + autores
-                + "\n- Projeto associado: " + projeto;
+        return projeto;
     }
 
-    @Override
-    public int compareTo(Publicacao pub) {
-        return (pub.anoPublic - this.anoPublic);
+    public String imprimir() {
+        return "- Título da publicação: " + titulo + "\n- Conferência onde foi publicada: "
+                + conferencia + "\n- Ano de publicação: " + anoPublic + "\n- Autores:" + imprimirAutores()
+                + "\n- Projeto associado: " + imprimirProjetoAssociado();
+    }
+
+    public String toString() {
+        return imprimir();
     }
 }
